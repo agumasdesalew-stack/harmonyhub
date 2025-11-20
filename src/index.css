@@ -17,9 +17,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0f0f0f;
+  background: #ffffff;
   color: white;
 }
+
+/* Theme overrides: add a light theme that switches a selection of common colors */
+html[data-theme="light"] body {
+  background: #ffffff !important;
+  color: #ffff !important;
+}
+
+html[data-theme="light"] .text-white { color: #111827 !important; }
+/* Tailwind bracketed class names need attribute selectors; use [class*="..."] to match them in CSS */
+html[data-theme="light"] [class*="bg-[#0f0f0f]"] { background: #ffffff !important; }
+html[data-theme="light"] [class*="bg-[#0a0a0a]"] { background: #ffffff !important; }
+html[data-theme="light"] [class*="bg-[#1a1a1a]"] { background: #f3f4f6 !important; }
+html[data-theme="light"] [class*="bg-black"] { background: #ffffff !important; }
+html[data-theme="light"] .border-gray-900, html[data-theme="light"] [class*="border-gray-900"] { border-color: #e5e7eb !important; }
+html[data-theme="light"] .text-gray-400, html[data-theme="light"] [class*="text-gray-400"] { color: #6b7280 !important; }
+html[data-theme="light"] .text-gray-500, html[data-theme="light"] [class*="text-gray-500"] { color: #6b7280 !important; }
+html[data-theme="light"] .text-gray-600, html[data-theme="light"] [class*="text-gray-600"] { color: #4b5563 !important; }
+
 
 input[type="range"] {
   -webkit-appearance: none;

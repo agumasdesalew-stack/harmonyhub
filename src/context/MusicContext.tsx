@@ -74,29 +74,65 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   }, [audio, queue]);
 
   const addSongs = async (files: FileList) => {
-    const newSongs: Song[] = [];
-    
+    const toAdd: Song[] = [];
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (file.type.startsWith('audio/')) {
-        const url = URL.createObjectURL(file);
-        const song: Song = {
-          id: `${Date.now()}-${i}`,
-          title: file.name.replace(/\.[^/.]+$/, ''),
-          artist: 'Unknown Artist',
-          album: 'Unknown Album',
-          duration: 0,
-          file,
-          url,
-          addedAt: new Date(),
-          playCount: 0,
-        };
-        newSongs.push(song);
+      if (!file.type.startsWith('audio/')) continue;
+
+      // detect duplicates by filename + size + lastModified
+      const alreadyInState = songs.some(s =>
+        s.file && s.file.name === file.name && s.file.size === file.size && (s.file as any).lastModified === (file as any).lastModified
+      );
+      const alreadyInBatch = toAdd.some(s => s.file.name === file.name && s.file.size === file.size && (s.file as any).lastModified === (file as any).lastModified);
+
+      if (alreadyInState || alreadyInBatch) {
+        console.info(`Skipped duplicate upload: ${file.name}`);
+        continue;
       }
+
+      const url = URL.createObjectURL(file);
+      const song: Song = {
+        id: `${Date.now()}-${i}`,
+        title: file.name.replace(/\.[^/.]+$/, ''),
+        artist: 'Unknown Artist',
+        album: 'Unknown Album',
+        duration: 0,
+        file,
+        url,
+        addedAt: new Date(),
+        playCount: 0,
+      };
+      toAdd.push(song);
     }
 
-    setSongs(prev => [...prev, ...newSongs]);
-    updateAlbums([...songs, ...newSongs]);
+    const totalAudio = (() => {
+      let count = 0;
+      for (let i = 0; i < files.length; i++) if (files[i].type.startsWith('audio/')) count++;
+      return count;
+    })();
+
+    const added = toAdd.length;
+    const skipped = totalAudio - added;
+
+    if (added > 0) {
+      setSongs(prev => {
+        const merged = [...prev, ...toAdd];
+        updateAlbums(merged);
+        return merged;
+      });
+    }
+
+    // Show a simple alert to the user reporting duplicates / adds
+    if (totalAudio === 0) {
+      alert('No audio files selected.');
+    } else if (added === 0 && skipped > 0) {
+      alert(`${skipped} duplicate file(s) were skipped; no new files were added.`);
+    } else if (added > 0 && skipped > 0) {
+      alert(`${added} file(s) added. ${skipped} duplicate file(s) were skipped.`);
+    } else if (added > 0 && skipped === 0) {
+      alert(`${added} file(s) added.`);
+    }
   };
 
   const updateAlbums = (allSongs: Song[]) => {

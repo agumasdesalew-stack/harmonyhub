@@ -6,7 +6,7 @@ export const RightSidebar = () => {
   const queueSongs = songs.filter(s => queue.includes(s.id));
 
   return (
-    <div className="w-72 bg-[#0a0a0a] text-white px-6 py-8 flex flex-col h-full min-h-0 border-l border-gray-900">
+    <div className="w-64 bg-[#0a0a0a] text-white px-4 py-6 flex flex-col h-full min-h-0">
       <div className="mb-10">
         <div className="flex items-center space-x-3 mb-6">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

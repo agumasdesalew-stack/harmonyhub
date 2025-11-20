@@ -10,14 +10,14 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
   const { playlists } = useMusic();
 
   return (
-    <div className="w-72 bg-[#0a0a0a] text-white flex flex-col h-full min-h-0 border-r border-gray-900">
+    <div className="w-64 bg-[#0a0a0a] text-white flex flex-col h-full min-h-0">
       {/* Top: Upload Button */}
-      <div className="p-6">
+      <div className="p-4">
         <UploadButton compact />
       </div>
 
       {/* Middle: Navigation (grows to fill space) */}
-      <nav className="flex-1 px-6 pb-6 space-y-6 overflow-y-auto">
+      <nav className="flex-1 px-4 pb-6 space-y-6 overflow-y-auto">
         {/* Library Section */}
         <div className="space-y-3">
           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider px-3">Library</h3>
