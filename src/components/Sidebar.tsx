@@ -1,4 +1,5 @@
 import { useMusic } from '../context/MusicContext';
+import { UploadButton } from './UploadButton';
 
 interface SidebarProps {
   currentView: string;
@@ -9,19 +10,14 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
   const { playlists } = useMusic();
 
   return (
-    <div className="w-72 bg-[#0a0a0a] text-white flex flex-col h-screen border-r border-gray-900">
+    <div className="w-72 bg-[#0a0a0a] text-white flex flex-col h-full min-h-0 border-r border-gray-900">
       {/* Top: Upload Button */}
-      <div className="p-8">
-        <button className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors">
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-          </svg>
-          <span className="text-lg font-semibold">Upload</span>
-        </button>
+      <div className="p-6">
+        <UploadButton compact />
       </div>
 
       {/* Middle: Navigation (grows to fill space) */}
-      <nav className="flex-1 px-6 pb-6 space-y-10 overflow-y-auto">
+      <nav className="flex-1 px-6 pb-6 space-y-6 overflow-y-auto">
         {/* Library Section */}
         <div className="space-y-3">
           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider px-3">Library</h3>
@@ -75,34 +71,46 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
             ))}
           </div>
         </div>
-      </nav>
 
-      {/* Bottom: Playlists (always at bottom) */}
-      {playlists.length > 0 && (
-        <div className="border-t border-gray-900 px-6 py-6">
-          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 px-3">Playlists</h3>
-          <div className="space-y-1 max-h-80 overflow-y-auto pr-2">
-            {playlists.map((playlist) => (
-              <button
-                key={playlist.id}
-                onClick={() => setCurrentView(`playlist-${playlist.id}`)}
-                className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group text-left ${
-                  currentView === `playlist-${playlist.id}`
-                    ? 'bg-gray-800 text-white font-medium'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-900/70'
-                }`}
-              >
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 19V6l12-3v13" />
-                  </svg>
-                </div>
-                <span className="text-base truncate">{playlist.name || 'Untitled Playlist'}</span>
-              </button>
-            ))}
+        {/* Playlists Section (moved into main nav for visibility) */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between px-3">
+            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Playlists</h3>
+            <button
+              onClick={() => setCurrentView('create-playlist')}
+              title="Create playlist"
+              className="text-yellow-400 hover:text-yellow-300 text-sm px-2 py-1 rounded"
+            >
+              +
+            </button>
+          </div>
+          <div className="space-y-1 max-h-64 overflow-y-auto pr-2">
+            {playlists.length === 0 ? (
+              <div className="px-4 py-3 text-gray-500 text-sm">No playlists yet</div>
+            ) : (
+              playlists.map((playlist) => (
+                <button
+                  key={playlist.id}
+                  onClick={() => setCurrentView(`playlist-${playlist.id}`)}
+                  className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group text-left ${
+                    currentView === `playlist-${playlist.id}`
+                      ? 'bg-gray-800 text-white font-medium'
+                      : 'text-gray-400 hover:text-white hover:bg-gray-900/70'
+                  }`}
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 19V6l12-3v13" />
+                    </svg>
+                  </div>
+                  <span className="text-base truncate">{playlist.name || 'Untitled Playlist'}</span>
+                </button>
+              ))
+            )}
           </div>
         </div>
-      )}
+      </nav>
+    
     </div>
   );
 };

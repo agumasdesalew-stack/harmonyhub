@@ -10,10 +10,10 @@ function App() {
 
   return (
     <MusicProvider>
-      <div className="flex h-screen bg-[#0f0f0f] overflow-hidden">
+      <div className="flex h-screen bg-[#0f0f0f] overflow-hidden gap-6">
         <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <MainContent currentView={currentView} />
+        <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+          <MainContent currentView={currentView} setCurrentView={setCurrentView} />
           <Player />
         </div>
         <RightSidebar />

@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+/* Ensure root fills viewport so children using flex and h-full work correctly */
+html, body, #root {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
