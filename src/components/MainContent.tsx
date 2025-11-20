@@ -40,8 +40,8 @@ export const MainContent = ({ currentView }: MainContentProps) => {
       const topArtists = Array.from(new Set(songs.map(s => s.artist))).slice(0, 6);
       
       return (
-        <div className="space-y-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="space-y-10">
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <h2 className="text-2xl font-bold text-white">Artists</h2>
               <span className="text-gray-400">/</span>
@@ -77,14 +77,14 @@ export const MainContent = ({ currentView }: MainContentProps) => {
             </div>
           </div>
 
-          <div className="flex space-x-4 mb-6">
-            <button className="px-6 py-2 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors">
+          <div className="flex space-x-4">
+            <button className="px-8 py-3 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors">
               New Releases
             </button>
-            <button className="px-6 py-2 bg-gray-800 text-white rounded-full font-medium hover:bg-gray-700 transition-colors">
+            <button className="px-8 py-3 bg-gray-800 text-white rounded-full font-medium hover:bg-gray-700 transition-colors">
               New Feed
             </button>
-            <button className="px-6 py-2 bg-gray-800 text-white rounded-full font-medium hover:bg-gray-700 transition-colors">
+            <button className="px-8 py-3 bg-gray-800 text-white rounded-full font-medium hover:bg-gray-700 transition-colors">
               Shuffle Play
             </button>
           </div>
@@ -93,18 +93,21 @@ export const MainContent = ({ currentView }: MainContentProps) => {
             <input
               type="text"
               placeholder="Search for songs, artists, or moods..."
-              className="w-full bg-[#1a1a1a] text-white px-12 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full bg-[#1a1a1a] text-white px-14 py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
             <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition-colors">
+            <button 
+              onClick={() => setShowCreatePlaylist(true)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+            >
               Create Playlist
             </button>
           </div>
 
           {songs.length > 0 && (
-            <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-8 text-white">
+            <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-10 text-white">
               <div className="text-xs font-semibold mb-2 uppercase tracking-wider">Curated Playlist</div>
               <h2 className="text-5xl font-bold mb-4">YOUR MUSIC</h2>
               <p className="text-white/90 mb-6 max-w-lg">
@@ -141,17 +144,17 @@ export const MainContent = ({ currentView }: MainContentProps) => {
 
           {topArtists.length > 0 && (
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Popular artists</h3>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-white">Popular artists</h3>
                 <button className="text-sm text-gray-400 hover:text-white transition-colors">See all</button>
               </div>
-              <div className="grid grid-cols-6 gap-4">
+              <div className="grid grid-cols-6 gap-6">
                 {topArtists.map((artist, idx) => (
                   <div key={idx} className="text-center group cursor-pointer">
-                    <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-3 flex items-center justify-center text-3xl group-hover:scale-105 transition-transform">
+                    <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-4 flex items-center justify-center text-3xl group-hover:scale-105 transition-transform">
                       🎤
                     </div>
-                    <p className="text-sm text-white font-medium truncate">{artist}</p>
+                    <p className="text-sm text-white font-medium truncate px-2">{artist}</p>
                   </div>
                 ))}
               </div>
@@ -164,7 +167,7 @@ export const MainContent = ({ currentView }: MainContentProps) => {
     if (currentView === 'all-songs') {
       return (
         <div>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold text-white">All Songs</h2>
             <UploadButton />
           </div>
@@ -177,7 +180,7 @@ export const MainContent = ({ currentView }: MainContentProps) => {
       const recentSongs = getRecentPlays();
       return (
         <div>
-          <h2 className="text-3xl font-bold text-white mb-6">Recent Plays</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">Recent Plays</h2>
           <SongList songs={recentSongs} />
         </div>
       );
@@ -187,7 +190,7 @@ export const MainContent = ({ currentView }: MainContentProps) => {
       const favoriteSongs = songs.filter(s => favorites.includes(s.id));
       return (
         <div>
-          <h2 className="text-3xl font-bold text-white mb-6">Favorites</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">Favorites</h2>
           <SongList songs={favoriteSongs} />
         </div>
       );
@@ -196,17 +199,26 @@ export const MainContent = ({ currentView }: MainContentProps) => {
     if (currentView === 'albums') {
       return (
         <div>
-          <h2 className="text-3xl font-bold text-white mb-6">Albums</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <h2 className="text-3xl font-bold text-white mb-8">Albums</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
             {albums.map(album => {
               const albumSongs = songs.filter(s => album.songs.includes(s.id));
               return (
                 <div
                   key={album.id}
-                  className="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer"
+                  className="bg-[#1a1a1a] rounded-lg p-5 hover:bg-[#252525] transition-colors cursor-pointer group"
                 >
-                  <div className="w-full aspect-square bg-purple-600 rounded-lg mb-3 flex items-center justify-center text-4xl">
-                    💿
+                  <div className="w-full aspect-square bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                    <svg className="w-16 h-16 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    <button className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-black ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
+                      </div>
+                    </button>
                   </div>
                   <h3 className="text-white font-semibold truncate">{album.name}</h3>
                   <p className="text-gray-400 text-sm truncate">{album.artist}</p>
@@ -224,11 +236,48 @@ export const MainContent = ({ currentView }: MainContentProps) => {
       );
     }
 
+    if (currentView === 'artists') {
+      const artistMap = new Map<string, Song[]>();
+      songs.forEach(song => {
+        if (!artistMap.has(song.artist)) {
+          artistMap.set(song.artist, []);
+        }
+        artistMap.get(song.artist)!.push(song);
+      });
+
+      return (
+        <div>
+          <h2 className="text-3xl font-bold text-white mb-8">Artists</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+            {Array.from(artistMap.entries()).map(([artist, artistSongs]) => (
+              <div
+                key={artist}
+                className="text-center group cursor-pointer"
+              >
+                <div className="w-full aspect-square bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mb-4 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform">
+                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-white font-semibold truncate">{artist}</h3>
+                <p className="text-gray-400 text-sm">{artistSongs.length} songs</p>
+              </div>
+            ))}
+          </div>
+          {artistMap.size === 0 && (
+            <div className="text-center py-12 text-gray-400">
+              No artists found
+            </div>
+          )}
+        </div>
+      );
+    }
+
     if (currentView === 'queue') {
       const queueSongs = songs.filter(s => queue.includes(s.id));
       return (
         <div>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold text-white">Queue</h2>
             {queue.length > 0 && (
               <button
@@ -239,11 +288,11 @@ export const MainContent = ({ currentView }: MainContentProps) => {
               </button>
             )}
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {queueSongs.map((song, index) => (
               <div
                 key={song.id}
-                className="bg-gray-800 p-4 rounded-lg flex items-center justify-between hover:bg-gray-700 transition-colors"
+                className="bg-[#1a1a1a] p-5 rounded-lg flex items-center justify-between hover:bg-[#252525] transition-colors"
               >
                 <div className="flex items-center space-x-4 flex-1">
                   <span className="text-gray-400 w-8">{index + 1}</span>
@@ -283,7 +332,7 @@ export const MainContent = ({ currentView }: MainContentProps) => {
 
       return (
         <div>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold text-white">{playlist.name}</h2>
             <button
               onClick={() => {
@@ -305,9 +354,11 @@ export const MainContent = ({ currentView }: MainContentProps) => {
   };
 
   return (
-    <div className="flex-1 bg-[#0f0f0f] text-white p-8 overflow-auto">
-      {renderContent()}
-      
+    <div className="flex-1 bg-[#0f0f0f] text-white px-12 py-10 overflow-y-auto overflow-x-hidden">
+      <div className="max-w-full pb-8">
+        {renderContent()}
+      </div>
+
       {showCreatePlaylist && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCreatePlaylist(false)}>
           <div className="bg-[#1a1a1a] p-6 rounded-xl max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>

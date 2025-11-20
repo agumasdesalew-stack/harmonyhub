@@ -24,38 +24,38 @@ export const SongList = ({ songs, showAddToPlaylist = true }: SongListProps) => 
   return (
     <div className="overflow-auto">
       <table className="w-full">
-        <thead className="bg-gray-800 sticky top-0">
+        <thead className="bg-[#1a1a1a] sticky top-0">
           <tr className="text-left text-gray-400 text-sm">
-            <th className="p-3 w-12">#</th>
-            <th className="p-3">Title</th>
-            <th className="p-3">Artist</th>
-            <th className="p-3">Album</th>
-            <th className="p-3">Plays</th>
-            <th className="p-3 w-32">Actions</th>
+            <th className="px-6 py-4 w-16">#</th>
+            <th className="px-6 py-4">Title</th>
+            <th className="px-6 py-4">Artist</th>
+            <th className="px-6 py-4">Album</th>
+            <th className="px-6 py-4">Plays</th>
+            <th className="px-6 py-4 w-40">Actions</th>
           </tr>
         </thead>
         <tbody>
           {songs.map((song, index) => (
             <tr
               key={song.id}
-              className={`border-b border-gray-800 hover:bg-gray-800 transition-colors ${
-                currentSong?.id === song.id ? 'bg-gray-800' : ''
+              className={`border-b border-gray-900 hover:bg-[#1a1a1a] transition-colors ${
+                currentSong?.id === song.id ? 'bg-[#1a1a1a]' : ''
               }`}
             >
-              <td className="p-3 text-gray-400">{index + 1}</td>
-              <td className="p-3">
+              <td className="px-6 py-4 text-gray-400">{index + 1}</td>
+              <td className="px-6 py-4">
                 <button
                   onClick={() => playSong(song)}
-                  className="text-white hover:text-purple-400 transition-colors text-left"
+                  className="text-white hover:text-yellow-400 transition-colors text-left font-medium"
                 >
                   {song.title}
                 </button>
               </td>
-              <td className="p-3 text-gray-400">{song.artist}</td>
-              <td className="p-3 text-gray-400">{song.album}</td>
-              <td className="p-3 text-gray-400">{song.playCount}</td>
-              <td className="p-3">
-                <div className="flex space-x-2 relative">
+              <td className="px-6 py-4 text-gray-400">{song.artist}</td>
+              <td className="px-6 py-4 text-gray-400">{song.album}</td>
+              <td className="px-6 py-4 text-gray-400">{song.playCount}</td>
+              <td className="px-6 py-4">
+                <div className="flex space-x-3 relative">
                   <button
                     onClick={() => toggleFavorite(song.id)}
                     className="hover:scale-110 transition-transform"
@@ -80,9 +80,9 @@ export const SongList = ({ songs, showAddToPlaylist = true }: SongListProps) => 
                         📁
                       </button>
                       {showPlaylistMenu === song.id && (
-                        <div className="absolute right-0 mt-2 w-48 bg-gray-700 rounded-lg shadow-lg z-10 max-h-48 overflow-auto">
+                        <div className="absolute right-0 mt-2 w-48 bg-[#1a1a1a] rounded-lg shadow-xl border border-gray-800 z-10 max-h-48 overflow-auto">
                           {playlists.length === 0 ? (
-                            <div className="p-3 text-gray-400 text-sm">No playlists</div>
+                            <div className="p-4 text-gray-400 text-sm">No playlists</div>
                           ) : (
                             playlists.map(playlist => (
                               <button
@@ -91,7 +91,7 @@ export const SongList = ({ songs, showAddToPlaylist = true }: SongListProps) => 
                                   addToPlaylist(playlist.id, song.id);
                                   setShowPlaylistMenu(null);
                                 }}
-                                className="w-full text-left px-4 py-2 hover:bg-gray-600 text-white text-sm"
+                                className="w-full text-left px-4 py-3 hover:bg-[#252525] text-white text-sm"
                               >
                                 {playlist.name}
                               </button>

@@ -21,7 +21,7 @@ export const Player = () => {
 
   if (!currentSong) {
     return (
-      <div className="h-20 bg-black border-t border-gray-900 flex items-center justify-center">
+      <div className="h-24 bg-black border-t border-gray-900 flex items-center justify-center flex-shrink-0">
         <div className="flex items-center justify-center space-x-6">
           <button className="text-gray-600 hover:text-gray-400 transition-colors">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -49,7 +49,7 @@ export const Player = () => {
   }
 
   return (
-    <div className="h-20 bg-black border-t border-gray-900 px-6 flex items-center justify-between relative">
+    <div className="h-24 bg-black border-t border-gray-900 px-6 flex items-center justify-between relative flex-shrink-0">
       <div className="flex items-center space-x-4 flex-1 min-w-0">
         <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center flex-shrink-0">
           <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
