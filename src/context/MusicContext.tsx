@@ -12,8 +12,6 @@ interface MusicContextType {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
-  shuffle: boolean;
-  toggleShuffle: () => void;
   addSongs: (files: FileList) => Promise<void>;
   removeSong: (id: string) => void;
   createPlaylist: (name: string) => void;
@@ -30,6 +28,10 @@ interface MusicContextType {
   togglePlay: () => void;
   seek: (time: number) => void;
   getRecentPlays: () => Song[];
+  shuffle: boolean;
+  toggleShuffle: () => void;
+  muted: boolean;
+  toggleMute: () => void;
 }
 
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
@@ -46,6 +48,7 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const [duration, setDuration] = useState(0);
   const [audio] = useState(new Audio());
   const [shuffle, setShuffle] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     const data = localStorage.getItem('harmonyhub-data');
@@ -75,6 +78,12 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
       audio.removeEventListener('ended', handleEnded);
     };
   }, [audio, queue]);
+
+  useEffect(() => {
+    try {
+      audio.muted = muted;
+    } catch {}
+  }, [muted, audio]);
 
   const addSongs = async (files: FileList) => {
     const toAdd: Song[] = [];
@@ -277,6 +286,14 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const toggleMute = () => {
+    setMuted(m => {
+      const next = !m;
+      try { audio.muted = next; } catch {}
+      return next;
+    });
+  };
+
   const togglePlay = () => {
     if (isPlaying) {
       audio.pause();
@@ -300,6 +317,8 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <MusicContext.Provider value={{
+      muted,
+      toggleMute,
       shuffle,
       toggleShuffle: () => setShuffle(s => !s),
       songs,
