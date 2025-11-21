@@ -12,6 +12,8 @@ interface MusicContextType {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
+  shuffle: boolean;
+  toggleShuffle: () => void;
   addSongs: (files: FileList) => Promise<void>;
   removeSong: (id: string) => void;
   createPlaylist: (name: string) => void;
@@ -43,6 +45,7 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [audio] = useState(new Audio());
+  const [shuffle, setShuffle] = useState(false);
 
   useEffect(() => {
     const data = localStorage.getItem('harmonyhub-data');
@@ -221,15 +224,51 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
         playSong(nextSong);
         setQueue(prev => prev.slice(1));
       }
-    } else if (currentSong) {
-      const currentIndex = songs.findIndex(s => s.id === currentSong.id);
-      if (currentIndex < songs.length - 1) {
-        playSong(songs[currentIndex + 1]);
+    } else if (songs.length > 0) {
+      if (shuffle && songs.length > 1) {
+        // pick a random song
+        const currentId = currentSong?.id;
+        let nextIndex = Math.floor(Math.random() * songs.length);
+        // avoid picking the same song if possible
+        if (currentId) {
+          const tries = 5;
+          let attempt = 0;
+          while (songs[nextIndex].id === currentId && attempt < tries) {
+            nextIndex = Math.floor(Math.random() * songs.length);
+            attempt++;
+          }
+        }
+        playSong(songs[nextIndex]);
+      } else if (currentSong) {
+        const currentIndex = songs.findIndex(s => s.id === currentSong.id);
+        if (currentIndex < songs.length - 1) {
+          playSong(songs[currentIndex + 1]);
+        }
+      } else {
+        // no current song, play first
+        playSong(songs[0]);
       }
     }
   };
 
   const playPrevious = () => {
+    if (songs.length === 0) return;
+    if (shuffle) {
+      // pick a random song
+      const currentId = currentSong?.id;
+      let prevIndex = Math.floor(Math.random() * songs.length);
+      if (currentId) {
+        const tries = 5;
+        let attempt = 0;
+        while (songs[prevIndex].id === currentId && attempt < tries) {
+          prevIndex = Math.floor(Math.random() * songs.length);
+          attempt++;
+        }
+      }
+      playSong(songs[prevIndex]);
+      return;
+    }
+
     if (currentSong) {
       const currentIndex = songs.findIndex(s => s.id === currentSong.id);
       if (currentIndex > 0) {
@@ -261,6 +300,8 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <MusicContext.Provider value={{
+      shuffle,
+      toggleShuffle: () => setShuffle(s => !s),
       songs,
       playlists,
       albums,

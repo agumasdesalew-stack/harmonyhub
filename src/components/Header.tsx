@@ -31,7 +31,7 @@ export const Header = ({ setCurrentView }: HeaderProps) => {
 
   return (
     <header className="w-full bg-transparent px-6 py-3 border-b border-gray-900 flex items-center justify-between">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-8">
         <button onClick={() => setCurrentView('browse')} className="text-2xl font-bold text-white hover:opacity-90">
           Harmony Hub
         </button>

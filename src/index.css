@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 * {
-  margin: 0;
-  padding: 0;
+  margin: 1;
+  padding: 1;
   box-sizing: border-box;
 }
 
@@ -17,14 +17,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #ffffff;
-  color: white;
+  /* Default to dark theme styles. Header/components expect dark backgrounds by default. */
+  background: #0f0f0f;
+  color: #ffffff;
 }
 
 /* Theme overrides: add a light theme that switches a selection of common colors */
 html[data-theme="light"] body {
   background: #ffffff !important;
-  color: #ffff !important;
+  color: #111827 !important;
 }
 
 html[data-theme="light"] .text-white { color: #111827 !important; }
@@ -37,6 +38,11 @@ html[data-theme="light"] .border-gray-900, html[data-theme="light"] [class*="bor
 html[data-theme="light"] .text-gray-400, html[data-theme="light"] [class*="text-gray-400"] { color: #6b7280 !important; }
 html[data-theme="light"] .text-gray-500, html[data-theme="light"] [class*="text-gray-500"] { color: #6b7280 !important; }
 html[data-theme="light"] .text-gray-600, html[data-theme="light"] [class*="text-gray-600"] { color: #4b5563 !important; }
+
+/* Sidebar specific and commonly used utility overrides */
+html[data-theme="light"] [class*="bg-[#0f172a]"] { background: #ffffff !important; }
+html[data-theme="light"] .text-gray-300, html[data-theme="light"] [class*="text-gray-300"] { color: #6b7280 !important; }
+html[data-theme="light"] .border-gray-800, html[data-theme="light"] [class*="border-gray-800"] { border-color: #e5e7eb !important; }
 
 
 input[type="range"] {
@@ -89,3 +95,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: #3a3a3a;
 }
+
+/* Scrollbar tweaks for light theme */
+html[data-theme="light"] ::-webkit-scrollbar-track { background: #f3f4f6; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }

@@ -10,6 +10,8 @@ export const Player = () => {
     playNext,
     playPrevious,
     seek,
+    shuffle,
+    toggleShuffle,
   } = useMusic();
 
   const formatTime = (seconds: number) => {
@@ -64,7 +66,11 @@ export const Player = () => {
 
       <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center">
         <div className="flex items-center space-x-6 mb-2">
-          <button className="text-gray-400 hover:text-white transition-colors">
+          <button
+            onClick={toggleShuffle}
+            className={`text-gray-400 transition-colors ${shuffle ? 'text-yellow-400' : 'hover:text-white'}`}
+            title="Shuffle"
+          >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
             </svg>
@@ -79,7 +85,7 @@ export const Player = () => {
           </button>
           <button
             onClick={togglePlay}
-            className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition-colors hover:scale-105"
+            className="w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition-colors hover:scale-105 shadow-xl"
           >
             {isPlaying ? (
               <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
@@ -107,17 +113,26 @@ export const Player = () => {
         </div>
         <div className="flex items-center space-x-2">
           <span className="text-xs text-gray-400 w-10 text-right">{formatTime(currentTime)}</span>
-          <input
-            type="range"
-            min="0"
-            max={duration || 0}
-            value={currentTime}
-            onChange={(e) => seek(Number(e.target.value))}
-            className="w-96 h-1 bg-gray-800 rounded-full appearance-none cursor-pointer"
-            style={{
-              background: `linear-gradient(to right, #eab308 0%, #eab308 ${(currentTime / duration) * 100}%, #1f2937 ${(currentTime / duration) * 100}%, #1f2937 100%)`
-            }}
-          />
+          <div className="w-96">
+            <div className="relative">
+              <div className="absolute inset-x-0 top-0 flex justify-between opacity-30 pointer-events-none">
+                {Array.from({ length: 30 }).map((_, i) => (
+                  <div key={i} className="w-px h-3 bg-gray-600 mx-0.5" />
+                ))}
+              </div>
+              <input
+                type="range"
+                min="0"
+                max={duration || 0}
+                value={currentTime}
+                onChange={(e) => seek(Number(e.target.value))}
+                className="w-full h-1 bg-gray-800 rounded-full appearance-none cursor-pointer relative z-10"
+                style={{
+                  background: `linear-gradient(to right, #eab308 0%, #eab308 ${(duration ? (currentTime / duration) * 100 : 0)}%, #1f2937 ${(duration ? (currentTime / duration) * 100 : 0)}%, #1f2937 100%)`
+                }}
+              />
+            </div>
+          </div>
           <span className="text-xs text-gray-400 w-10">{formatTime(duration)}</span>
         </div>
       </div>

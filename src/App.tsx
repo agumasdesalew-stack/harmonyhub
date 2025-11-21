@@ -13,7 +13,7 @@ function App() {
     <MusicProvider>
       <div className="flex flex-col h-screen bg-transparent overflow-hidden">
         <Header setCurrentView={setCurrentView} />
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex overflow-y-auto min-h-0">
           <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             <MainContent currentView={currentView} setCurrentView={setCurrentView} />

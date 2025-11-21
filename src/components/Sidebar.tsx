@@ -21,8 +21,8 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
   ];
 
   return (
-    <div className="w-64 bg-[#0F172A] text-gray-300 flex flex-col h-full">
-      {/* Upload Button - Highlighted like in your reference */}
+    <div className="w-64 bg-[#0f172a] text-gray-300 flex flex-col h-full shadow-lg">
+      {/* Upload Button */}
       <div className="px-6 py-5 border-b border-gray-800">
         <UploadButton compact />
       </div>
@@ -39,14 +39,16 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
               <li key={item.view}>
                 <button
                   onClick={() => setCurrentView(item.view)}
-                  className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all ${
+                  className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all rounded-md ${
                     isActive(item.view)
-                      ? 'text-white font-medium border-l-4 border-yellow-400 pl-3 bg-gray-900/50'
+                      ? 'text-white border-l-4 border-yellow-400 pl-3 bg-gray-900/40'
                       : 'hover:text-white hover:bg-gray-800/50'
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
-                  <span className="text-sm">{item.label}</span>
+                  <span className={`font-bold ${isActive(item.view) ? 'text-white' : 'text-gray-300'}`}>
+                    {item.label}
+                  </span>
                 </button>
               </li>
             ))}
@@ -63,14 +65,16 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
               <li key={item.view}>
                 <button
                   onClick={() => setCurrentView(item.view)}
-                  className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all ${
+                  className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all rounded-md ${
                     isActive(item.view)
-                      ? 'text-white font-medium border-l-4 border-yellow-400 pl-3 bg-gray-900/50'
+                      ? 'text-white border-l-4 border-yellow-400 pl-3 bg-gray-900/40'
                       : 'hover:text-white hover:bg-gray-800/50'
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
-                  <span className="text-sm">{item.label}</span>
+                  <span className={`font-bold ${isActive(item.view) ? 'text-white' : 'text-gray-300'}`}>
+                    {item.label}
+                  </span>
                 </button>
               </li>
             ))}
@@ -85,7 +89,7 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
             </h3>
             <button
               onClick={() => setCurrentView('create-playlist')}
-              className="text-yellow-400 hover:text-yellow-300 text-xl font-bold"
+              className="text-yellow-400 hover:text-yellow-300 text-2xl leading-none"
               title="Create playlist"
             >
               +
@@ -100,16 +104,16 @@ export const Sidebar = ({ currentView, setCurrentView }: SidebarProps) => {
                 <li key={playlist.id}>
                   <button
                     onClick={() => setCurrentView(`playlist-${playlist.id}`)}
-                    className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all ${
+                    className={`w-full flex items-center gap-4 px-4 py-3 text-left transition-all rounded-md ${
                       isActive(`playlist-${playlist.id}`)
-                        ? 'text-white font-medium border-l-4 border-yellow-400 pl-3 bg-gray-900/50'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                        ? 'text-white border-l-4 border-yellow-400 pl-3 bg-gray-900/40'
+                        : 'hover:text-white hover:bg-gray-800/50'
                     }`}
                   >
                     <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded flex items-center justify-center flex-shrink-0">
                       <span className="text-white text-xl">♪</span>
                     </div>
-                    <span className="text-sm truncate">
+                    <span className={`font-bold truncate ${isActive(`playlist-${playlist.id}`) ? 'text-white' : 'text-gray-300'}`}>
                       {playlist.name || 'Untitled Playlist'}
                     </span>
                   </button>

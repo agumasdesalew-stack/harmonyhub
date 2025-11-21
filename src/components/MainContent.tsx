@@ -100,8 +100,8 @@ export const MainContent = ({ currentView, setCurrentView }: MainContentProps) =
           )}
 
           {songs.length > 0 && (
-            <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-8 text-white flex flex-col md:flex-row items-center gap-6">
-              <div className="w-40 h-40 md:w-56 md:h-56 bg-[#111] rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-6 text-white flex flex-col md:flex-row items-center gap-6 shadow-lg">
+                <div className="w-28 h-28 md:w-36 md:h-36 bg-[#111] rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
                 {currentSong ? (
                   currentSong.coverArt ? (
                     // show coverArt image when available
@@ -118,9 +118,9 @@ export const MainContent = ({ currentView, setCurrentView }: MainContentProps) =
                 )}
               </div>
 
-              <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0">
                 <div className="text-xs font-semibold mb-2 uppercase tracking-wider">Now Playing</div>
-                <h2 className="text-3xl md:text-5xl font-bold mb-2 truncate">{currentSong?.title || 'Nothing playing'}</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mb-2 truncate">{currentSong?.title || 'Nothing playing'}</h2>
                 <p className="text-white/90 mb-4 truncate">{currentSong ? `${currentSong.artist}${currentSong.album ? ` • ${currentSong.album}` : ''}` : 'Your collection is ready — play a song to see details here.'}</p>
                 <p className="text-white/90 mb-6 max-w-lg truncate">{currentSong?.file?.name || 'Enjoy your personal collection. Each track tells a story.'}</p>
 

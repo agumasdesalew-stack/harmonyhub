@@ -24,7 +24,7 @@ export const SongList = ({ songs, showAddToPlaylist = true }: SongListProps) => 
   return (
     <div className="overflow-auto">
       <table className="w-full table-auto">
-        <thead className="bg-[#111] sticky top-0">
+        <thead className="bg-[#D3D3D3] sticky top-0">
           <tr className="text-left text-gray-400 text-sm">
             <th className="px-4 py-3 w-12">#</th>
             <th className="px-4 py-3">Title</th>
@@ -37,8 +37,8 @@ export const SongList = ({ songs, showAddToPlaylist = true }: SongListProps) => 
           {songs.map((song, index) => (
             <tr
               key={song.id}
-              className={`border-b border-gray-900 hover:bg-[#111] transition-colors ${
-                currentSong?.id === song.id ? 'bg-[#111]' : ''
+              className={`border-b border-gray-900 hover:bg-[#D3D3D3] transition-colors ${
+                currentSong?.id === song.id ? 'bg-[#D3D3D3]' : ''
               }`}
             >
               <td className="px-4 py-3 text-gray-400">{index + 1}</td>
